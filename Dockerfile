@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
@@ -15,3 +15,6 @@ COPY Pipfile Pipfile.lock /code/
 
 # using pipenv to manage the dependencies
 RUN pip install pipenv && pipenv install --system
+
+# copy the whole directory into Docker container
+COPY . /code/

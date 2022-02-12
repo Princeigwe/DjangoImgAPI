@@ -40,7 +40,7 @@ Create a `Dockerfile` and a `docker-compose.yml` file in the root folder.
 
 * **Content of the Dockerfile:**
     
-    FROM python:3
+    FROM python:3.8
 
     ENV PYTHONDONTWRITEBYTECODE=1
 
