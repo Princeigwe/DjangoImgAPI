@@ -2,7 +2,9 @@
 
 ## Hello, My name is Prince, and I'm a Python back-end developer.
 
-This repo is concerning an API blog I'm currently writing, and any other API blog I'll write in the future. The README.md file will be updated as the project progresses. 
+This repo is concerning an API blog I'm currently writing, and any other API blog I'll write in the future. The README.md file will be updated as the project progresses.
+
+For any problem concerning this documentation, you can reach me [here](igwep297@gmail.com).
 
 Thank you.
 
@@ -87,3 +89,34 @@ Create a `Dockerfile` and a `docker-compose.yml` file in the root folder.
 
 * Build and run the container:
     > $ docker-compose up -d --build
+
+* Setting up media and static folders
+
+    ```
+    # settings.py
+
+    STATIC_URL = '/static/'
+
+    STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'))
+    STATIC_ROOT = os.path.join((BASE_DIR, 'staticfiles'))
+
+    MEDIA_URL = '/media/'  
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+    # urls.py [from root folder]
+    from django.conf import settings
+    from django.contrib import admin
+    from django.urls import path
+    from django.conf.urls.static import static
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+    ]
+    if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,       document_root=settings.MEDIA_ROOT)
+
+
+    ```
+
+    
