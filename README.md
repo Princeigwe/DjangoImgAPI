@@ -211,3 +211,23 @@ INSTALLED_APPS = [
     $ docker-compose exec web python manage.py makemigrations images
     $ docker-compose exec web python manage.py migrate
     ```
+
+* Create Image serializer:
+    ```
+    from dataclasses import field
+    from . models import Image
+    from rest_framework import serializers
+
+
+    class ImageSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Image
+            fields = ('id' ,'title', 'image', 'caption')
+    ```
+    This makes it possible to transmit the image object data from one party to another.
+
+* Adding HTTP methods:
+    Here API views are created which executes certain HTTP methods on the Image resource.
+    Look at [images/views.py](https://github.com/Princeigwe/DjangoImgAPI/blob/main/images/views.py) for more details.
+
+    API endpoints are created at: [images/urls.py](https://github.com/Princeigwe/DjangoImgAPI/blob/main/images/urls.py)
