@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.auth import get_user_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,9 +42,11 @@ INSTALLED_APPS = [
     
     # local apps
     'images.apps.ImagesConfig',
+    'users.apps.UsersConfig',
     
     # 3rd party apps
-    'rest_framework',
+    'rest_framework', # Django REST Framework
+    'oauth2_provider', # Django OAuth2 app
     
 ]
 
@@ -83,6 +86,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoImageAPI.wsgi.application'
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
