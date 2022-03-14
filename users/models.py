@@ -1,8 +1,6 @@
 from django.db import models
-# from django.contrib.auth.base_user import  BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
-# from .managers import CustomUserManager
 from django.contrib.auth.base_user import  BaseUserManager
 
 # Create your models here.
@@ -45,10 +43,6 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=50, blank=True)
     age = models.PositiveSmallIntegerField(blank=True, default=0)
     image = models.ImageField(upload_to='profile_pictures/', blank=True)
-    country = models.CharField(max_length=100, blank=True)
-    occupation = models.CharField(max_length=100, blank=True)
-    birthday = models.DateField(auto_now=False, blank=True, default=timezone.now)
-    mobile = models.CharField(max_length=12, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     

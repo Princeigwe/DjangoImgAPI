@@ -23,7 +23,8 @@ urlpatterns = [
     
     path('api-auth/', include('rest_framework.urls')), # for  REST framework's login and logout views
     path('images/', include('images.urls', namespace='images')), # getting the list of all urls in images app
-    path('users/', include('users.urls', namespace='users'))
+    path('users/', include('users.urls', namespace='users')),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
