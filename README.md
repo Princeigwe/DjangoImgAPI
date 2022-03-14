@@ -230,3 +230,7 @@ INSTALLED_APPS = [
     Look at [images/views.py](https://github.com/Princeigwe/DjangoImgAPI/blob/main/images/views.py) for more details.
 
     API endpoints are created at: [images/urls.py](https://github.com/Princeigwe/DjangoImgAPI/blob/main/images/urls.py)
+
+
+
+### USER AUTHENTICATION AND AUTHORIZATION
