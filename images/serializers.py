@@ -1,4 +1,3 @@
-from dataclasses import field
 from . models import Image
 from rest_framework import serializers
 

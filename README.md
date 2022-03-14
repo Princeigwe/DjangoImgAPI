@@ -214,7 +214,6 @@ INSTALLED_APPS = [
 
 * Create Image serializer:
     ```
-    from dataclasses import field
     from . models import Image
     from rest_framework import serializers
 
