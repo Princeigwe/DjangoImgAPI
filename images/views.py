@@ -3,6 +3,8 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .serializers import ImageSerializer
 from .models import Image
 from rest_framework.parsers import MultiPartParser
+from rest_framework import permissions
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 
 class ImageListCreate(ListCreateAPIView): # POST/GET methods
@@ -15,3 +17,4 @@ class ImageListCreate(ListCreateAPIView): # POST/GET methods
 class ImageRetrieveDestroyDetailView(RetrieveUpdateDestroyAPIView): # GET{id}/DELETE/PUT methods
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]

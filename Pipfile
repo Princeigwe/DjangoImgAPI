@@ -10,6 +10,7 @@ pillow = "*"
 psycopg2 = "*"
 django-filter = "*"
 django-oauth-toolkit = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
