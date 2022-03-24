@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 ]
 
 OAUTH2_PROVIDER = {
-    # this is the list of available scopes
+    # this is dictionary of available scopes, with custom description
     'SCOPES': {
         # 'read': 'Read scope',
         # 'write': 'Write scope',

@@ -361,7 +361,7 @@ INSTALLED_APPS = [
 * Registering an application with DjangoImgAPI service:
 
     ``` 
-    GET http://localhost/oauth/applications/register
+    GET http://0.0.0.0:8000/oauth/applications/register
     ```
 
 * Requesting for an authorization code:
