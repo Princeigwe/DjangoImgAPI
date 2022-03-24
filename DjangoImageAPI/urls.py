@@ -18,13 +18,32 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
+import oauth2_provider.views as oauth2_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('api-auth/', include('rest_framework.urls')), # for  REST framework's login and logout views
-    path('images/', include('images.urls', namespace='images')), # getting the list of all urls in images app
-    path('users/', include('users.urls', namespace='users')),
-    path('oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('api/v1/images/', include('images.urls', namespace='images')), # getting the list of all urls in images app
+    path('api/v1/accounts/', include('accounts.urls', namespace='accounts')),
+    path('oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')), # parent oauth provider url
+
+
+    # # provider endpoints
+    # path('oauth/authorize/', oauth2_views.AuthorizationView.as_view(), name="authorize"),
+    # path('oauth/token/', oauth2_views.TokenView.as_view(), name="token"),
+    # path('oauth/revoke-token/', oauth2_views.RevokeTokenView.as_view(), name="revoke-token"),
+
+    # # application management endpoints
+    # path('oauth/applications/', oauth2_views.ApplicationList.as_view(), name="list"),
+    # path('oauth/applications/register/', oauth2_views.ApplicationRegistration.as_view(), name="register"),
+    # path('oauth/applications/<pk>/', oauth2_views.ApplicationDetail.as_view(), name="detail"),
+    # path('oauth/applications/<pk>/delete/', oauth2_views.ApplicationDelete.as_view(), name="delete"),
+    # path('oauth/applications/<pk>/update/', oauth2_views.ApplicationUpdate.as_view(), name="update"),
+    
+    # # token management endpoints
+    # path('authorized-tokens/', oauth2_views.AuthorizedTokensListView.as_view(), name="authorized-token-list"),
+    # path('authorized-tokens/<pk>/delete/', oauth2_views.AuthorizedTokenDeleteView.as_view(), name="authorized-token-delete"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

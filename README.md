@@ -234,15 +234,15 @@ INSTALLED_APPS = [
 
 
 ### **USER AUTHENTICATION AND AUTHORIZATION**
-* Create a users app, and add to 'INSTALLED_APPS' list:
+* Create a accounts app, and add to 'INSTALLED_APPS' list:
 
 
     ```
-    $ docker-compose exec web python manage.py startapp users
+    $ docker-compose exec web python manage.py startapp accounts
 
     ```
 
-* Create a CustomUser model in users app:
+* Create a CustomUser model in accounts app:
 
     ``` 
     from django.db import models
@@ -300,7 +300,7 @@ INSTALLED_APPS = [
     [Don't forget to migrate the model]
 
     ```
-    $ docker-compose exec web python manage.py makemigrations users
+    $ docker-compose exec web python manage.py makemigrations accounts
 
     $ docker-compose exec web python manage.py migrate
     ```
@@ -326,3 +326,72 @@ INSTALLED_APPS = [
     $ docker-compose build
     ```
     [Start up the containers again]
+
+#### **Setting up OAuth provider for authorization process**
+
+    ``` ## settings.py 
+        
+        REST_FRAMEWORK = {
+            'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+            'DEFAULT_AUTHENTICATION_CLASSES': (
+                'oauth2_provider.contrib.rest_framework.OAuth2Authentication', # OAuth2Authentication backend for the API
+            ),
+        }
+
+
+        OAUTH2_PROVIDER = {
+            # this is the list of available scopes that will be visible to the user
+            'SCOPES': {
+                'images': 'Create and get images',
+                'image': 'Read and delete an image'
+            }
+        }
+
+
+        MIDDLEWARE = [
+            ...
+            ...
+            'oauth2_provider.middleware.OAuth2TokenMiddleware', # to check for tokens in requests
+        ]
+
+        # the above middleware must come after 'django.middleware.security.SecurityMiddleware' and before 'django.middleware.common.CommonMiddleware'
+
+    ```
+
+* Registering an application with DjangoImgAPI service:
+
+    ``` 
+    GET http://localhost/oauth/applications/register
+    ```
+
+* Requesting for an authorization code:
+
+    ``` 
+    GET http://0.0.0.0:8000/oauth/authorize/?
+    client_id=<your_client_id_from_app_registration>
+    &response_type=code
+    &redirect_uri=<the_redirect_uri_from_app_registration>
+    ```
+
+* Requesting for the access token
+
+    ``` 
+    POST http://0.0.0.0:8000/oauth/token/ 
+    
+    client_id=<your_client_id_from_app_registration>
+    client_secret=<your_client_secret_from_app_registration>
+    code=<code_given_after_authorization_request>
+    redirect_uri=<the_redirect_uri_from_app_registration>
+
+
+
+    Response:
+    {
+	"access_token": "<access token>",
+	"expires_in": 36000,
+	"token_type": "Bearer",
+	"scope": "images image",
+	"refresh_token": "<refresh token>"
+    }
+    ```
+

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     
     # local apps
     'images.apps.ImagesConfig',
-    'users.apps.UsersConfig',
+
+    'accounts.apps.AccountsConfig',
     
     # 3rd party apps
     'rest_framework', # Django REST Framework
@@ -50,32 +51,41 @@ INSTALLED_APPS = [
     
 ]
 
-# OAUTH2_PROVIDER = {
-#     # this is the list of available scopes
-#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-# }
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {
+        # 'read': 'Read scope',
+        # 'write': 'Write scope',
+        # 'users': 'Access to your users',
+        'images': 'Create and get images',
+        'image': 'Read and delete an image'}
+}
 
 
 REST_FRAMEWORK = {
 
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    # ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # )
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication', # OAuth2Authentication backend for the API
+    ),
 }
+
+# AUTHENTICATION_BACKENDS = [
+#     'oauth2_provider.backends.OAuth2Backend', # for custom authentication with OAuth provider
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware', # to check and validate tokens in requests with what's already in the database
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'DjangoImageAPI.urls'
@@ -98,9 +108,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoImageAPI.wsgi.application'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_URL='/users/login/'
+LOGIN_URL='/accounts/login/'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
